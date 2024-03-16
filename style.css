@@ -45,6 +45,10 @@ a{
     color: #0088d2;
 }
 
+#marca{
+    color: #0088d2;
+}
+
 .hamburguer{
     display: none;
     cursor: pointer;
