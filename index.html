@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <title>WebStack</title>
 </head>
 <body>
@@ -26,6 +27,24 @@
     </header>
     <script src="scripts.js"></script>
 
+    <div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form>
+        <label for="titulo">Nome do Livro: </label> 
+        <input type="text" id="nome"> <br> <br>
+        <label for="titulo">Autor do Livro: </label>
+        <input type="text" id="autor"> <br> <br>
+        <label for="titulo">Ano de lançamento do Livro: </label>
+        <input type="number" id="ano"> <br> <br>
+        <input id="salvar" type="submit" value="Salvar" onclick="saveBook()"/>
+    </form>
+  </div>
+
+</div>
+
     <table>
         <tr>
             <th>
@@ -42,19 +61,6 @@
             </th>
         </tr>
         <tr>
-            <td>
-                harry porter e o cálice perdido
-            </td>
-            <td>
-                jk
-            </td>
-            <td>
-                2001
-            </td>
-            <td>
-                <img src="editar.png" alt="">
-                <img src="excluir.png" alt="">
-            </td>
         </tr>
     </table>
 </body>
@@ -66,4 +72,41 @@
 type="module"
 src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
 ></script>
+
+<script>
+    // Initialize Parse
+      Parse.initialize("GuU1rOfMH8uOj08uIoK3CvjUphB7MWhbRzu0R8U8", "J5HBPvBlD0V0Eh5yhHET2PSQAaV0q97gpcGIvT5x"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+      Parse.serverURL = "https://parseapi.back4app.com/";
+
+      (async () => {
+const query = new Parse.Query('catalogo');
+// You can also query by using a parameter of an object
+// query.equalTo('objectId', 'xKue915KBG');
+const results = await query.find();
+try {
+for (const object of results) {
+  // Access the Parse Object attributes using the .GET method
+  const id = object.get('createdAt');
+  const teste = object.id;
+  const livro = object.get('livro');
+  const autor = object.get('autor');
+  const ano_lanc = object.get('ano_lancamento');
+  const element = document.getElementById('library');
+  console.log(id, teste);
+  let qtlinha = element.rows.length;
+  var linha = element.insertRow(qtlinha);
+  var insert_livro = linha.insertCell(0);
+  var insert_autor = linha.insertCell(1);
+  var insert_ano_lanc = linha.insertCell(2);
+  var editar = linha.insertCell(3);
+  insert_livro.innerHTML = `${livro}`;
+  insert_autor.innerHTML = `${autor}`;
+  insert_ano_lanc.innerHTML = `${ano_lanc}`;
+  editar.innerHTML = "<button id='edit'><img src='editar.png'></button>" + "<button id='delete'><img src='excluir.png'></button>";
+}
+} catch (error) {
+console.error('Error while fetching MyCustomClassName', error);
+}
+})();
+; </script>
 </html>
