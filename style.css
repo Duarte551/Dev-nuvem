@@ -75,7 +75,7 @@ table, td, th{
 }
 
 footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;
@@ -209,5 +209,20 @@ input{
 
     .nav-menu.active{
         left: 0px
+    }
+
+    table, td, th{
+        margin: 220px 60px 0px 10%;
+        padding: 10px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border: 2px black solid;
+        border-collapse: collapse;
+    }
+    
+    #add{
+        position: relative;
+        margin-top: 220px;
     }
 }
