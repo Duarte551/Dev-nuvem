@@ -36,6 +36,7 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <form>
+        <h2>Cadastrar Livro</h2> <br>
         <label for="titulo">Nome do Livro: </label> 
         <input type="text" id="livro"> <br> <br>
         <label for="titulo">Autor do Livro: </label>
@@ -67,15 +68,9 @@
         </tr>
     </table>
 </body>
-
 <footer>
     <p><a href="https://www.flaticon.com/br/icones-gratis/desinstalar" title="desinstalar ícones" id="link">Ícones criados por feen - Flaticon</a></p>
 </footer>
-<script src="scripts.js"></script>
-<script
-type="module"
-src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-></script>
 
 <script>
     // Initialize Parse
@@ -90,13 +85,11 @@ const results = await query.find();
 try {
 for (const object of results) {
   // Access the Parse Object attributes using the .GET method
-  const id = object.get('createdAt');
-  const teste = object.id;
+  const id_objeto = object.id;
   const livro = object.get('livro');
   const autor = object.get('autor');
   const ano_lanc = object.get('ano_lancamento');
   const element = document.getElementById('library');
-  console.log(id, teste);
   let qtlinha = element.rows.length;
   var linha = element.insertRow(qtlinha);
   var insert_livro = linha.insertCell(0);
@@ -106,7 +99,7 @@ for (const object of results) {
   insert_livro.innerHTML = `${livro}`;
   insert_autor.innerHTML = `${autor}`;
   insert_ano_lanc.innerHTML = `${ano_lanc}`;
-  editar.innerHTML = "<button id='edit'><img src='editar.png'></button>" + "<button id='delete'><img src='excluir.png'></button>";
+  editar.innerHTML = "<button id='edit' onclick=alterar('"+id_objeto+"')><img src='editar.png'></button>" + "<button id='delete' onclick=excluir('"+id_objeto+"')><img src='excluir.png'></button>";  
 }
 } catch (error) {
 console.error('Error durante a busca de dados: ', error);
@@ -137,7 +130,108 @@ async function saveBook(){
   }
 })();};
     
+async function alter(id){
+    (async () => {
+        console.log(id);
+  const query = new Parse.Query('catalogo');
+  try {
+    // here you put the objectId that you want to update
+    const object = await query.get(id);
+    var livro = document.getElementById('alter_livro').value;
+    var autor = document.getElementById('alter_autor').value;
+    var ano_lanc = parseInt(document.getElementById('alter_ano_lanc').value);
+    object.set('livro', livro);
+    object.set('autor', autor);
+    object.set('ano_lancamento', ano_lanc);
+    try {
+      const response = await object.save();
+      // You can use the "get" method to get the value of an attribute
+      // Ex: response.get("<ATTRIBUTE_NAME>")
+      // Access the Parse Object attributes using the .GET method
+        console.log(response.get('livro'));
+        console.log('Livro atualizado ', response);
+        console.log(response.get('autor'));
+        console.log('Autor atualizado ', response);
+        console.log(response.get('ano_lancamento'));
+        console.log('Ano de lançamento atualizado ', response);
+        alert('Livro atualizado com sucesso');
+        window.location.reload();
+    } catch (error) {
+        alert('Error ao atualizar o livro: ' + error);
+        }
+  } catch (error) {
+    console.error('Error while retrieving object ', error);
+  }
+})();};
+
+async function excluir(id){
+    (async () => {
+        console.log(id);
+  const query = new Parse.Query('catalogo');
+  try {
+    // here you put the objectId that you want to delete
+    const object = await query.get(id);
+    try {
+      const response = await object.destroy();
+      alert('Livro excluído com sucesso');
+      window.location.reload();
+    } catch (error) {
+        alert('Error ao excluir o livro: ' + error);
+    }
+  } catch (error) {
+    alert('Error ao excluir o livro: ' + error);
+  }
+})();
+}
+
+var alterar_elemento = document.getElementById("salvar");
+var id_alter = "";
+
+async function alterar(id){
+   
+// When the user clicks anywhere outside of the modal, close it
+    var alter_modal = document.getElementById("alterModal");
+    var alter_span = document.getElementsByClassName("close_alter")[0];
+    var alterar_elemento = document.getElementById("salvar_alteracao");
+    var id_alter = id;
+    console.log(alterar_elemento);
+    alter_modal.style.display = "block";
+    alterar_elemento.setAttribute("id", "salvar");
+    alterar_elemento.setAttribute("onclick", "alter('"+id+"')")
+    console.log(alterar_elemento);
+
+
+// When the user clicks on <span> (x), close the modal
+    alter_span.onclick = function() {
+    alter_modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == alter_modal) {
+    alter_modal.style.display = "none";
+  }
+};
+
+}
+    
     </script>
 
+<div id="alterModal" class="alterarModal">
+    <!-- Modal content -->
+    <div class="alter-modal-content">
+      <span class="close_alter">&times;</span>
+      <form>
+          <h2>Alterar Livro</h2> <br>
+          <label for="titulo">Nome do Livro: </label> 
+          <input type="text" id="alter_livro"> <br> <br>
+          <label for="titulo">Autor do Livro: </label>
+          <input type="text" id="alter_autor"> <br> <br>
+          <label for="titulo">Ano de lançamento do Livro: </label>
+          <input type="number" id="alter_ano_lanc"> <br> <br>
+          <input id="salvar_alteracao" value="Salvar" onclick="alter('id')"/>
+      </form>
+    </div>
+    </div>
 
+<script src="scripts.js"></script>
 </html>
