@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
-    <title>WebStack</title>
+    <title>Avaliação</title>
 </head>
 <body>
     <img src="excluir.png" alt="" class="edit" hidden>  
@@ -27,7 +27,7 @@
     
     </header>
 
-    <button id="add">Adicionar Livro</button>
+    <button id="add">Adicionar Avaliação</button>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -36,13 +36,17 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <form>
-        <h2>Cadastrar Livro</h2> <br>
+        <h2>Cadastrar Avaliação</h2> <br>
         <label for="titulo">Nome do Livro: </label> 
         <input type="text" id="livro"> <br> <br>
         <label for="titulo">Autor do Livro: </label>
         <input type="text" id="autor"> <br> <br>
         <label for="titulo">Ano de lançamento do Livro: </label>
         <input type="number" id="ano_lanc"> <br> <br>
+        <label for="titulo">Nota: </label> 
+        <input type="text" id="nota"> <br> <br>
+        <label for="titulo">Avaliação: </label> 
+        <input type="number" id="avaliacao"> <br> <br>
         <input id="salvar" value="Salvar" onclick="saveBook()"/>
     </form>
   </div>
@@ -228,6 +232,10 @@ window.onclick = function(event) {
           <input type="text" id="alter_autor"> <br> <br>
           <label for="titulo">Ano de lançamento do Livro: </label>
           <input type="number" id="alter_ano_lanc"> <br> <br>
+          <label for="titulo">Nota: </label> 
+          <input type="text" id="nota"> <br> <br>
+          <label for="titulo">Avaliação: </label> 
+          <input type="number" id="avaliacao"> <br> <br>
           <input id="salvar_alteracao" value="Salvar" onclick="alter('id')"/>
       </form>
     </div>
