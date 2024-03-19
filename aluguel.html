@@ -32,7 +32,7 @@
             <th>Livro Alugado</th>
             <th>Data Alugado</th>
             <th>Previsão de retorno</th>
-            <th>Quantidade Alugada</th>
+            <th>Observação</th>
             <th>Ações</th>
         </tr>
         <tr>
@@ -56,28 +56,23 @@ for (const object of results) {
   const id_objeto = object.id;
   const cliente = object.get('nome_cliente');
   const livro = object.get('nome_livro');
-  const dt_aluguel = object.get('createdAt');
+  const dt_aluguel = object.get('alugado');
   const dt_retorno = object.get('dt_retorno');
-  const qt_aluguel = object.get('quantidade');
+  const observacao = object.get('obs');
   const element = document.getElementById('aluguel');
-  let dt_aluguel_format = new Date(dt_aluguel);
-  dt_aluguel_format = String(dt_aluguel_format.getDate() + '/' + (dt_aluguel_format.getMonth() + 1) + '/' + dt_aluguel_format.getFullYear());
-
-  let dt_retorno_format = new Date(dt_retorno);
-  dt_retorno_format = String(dt_retorno_format.getDate() + '/' + (dt_retorno_format.getMonth() + 1) + '/' + dt_retorno_format.getFullYear());
   let qtlinha = element.rows.length;
   var linha = element.insertRow(qtlinha);
   var insert_cliente = linha.insertCell(0);
   var insert_livro = linha.insertCell(1);
   var insert_dt_aluguel = linha.insertCell(2);
   var insert_dt_retorno = linha.insertCell(3);
-  var insert_quantidade = linha.insertCell(4);
+  var insert_observacao = linha.insertCell(4);
   var editar = linha.insertCell(5);
   insert_cliente.innerHTML = `${cliente}`;
   insert_livro.innerHTML = `${livro}`;
-  insert_dt_aluguel.innerHTML = `${dt_aluguel_format}`;
-  insert_dt_retorno.innerHTML = `${dt_retorno_format}`;
-  insert_quantidade.innerHTML = `${qt_aluguel}`;
+  insert_dt_aluguel.innerHTML = `${dt_aluguel}`;
+  insert_dt_retorno.innerHTML = `${dt_retorno}`;
+  insert_observacao.innerHTML = `${observacao}`;
   editar.innerHTML = "<button id='edit' onclick=alterar('"+id_objeto+"')><img src='editar.png'></button>" + "<button id='delete' onclick=excluir('"+id_objeto+"')><img src='excluir.png'></button>";  
 }
 } catch (error) {
@@ -85,6 +80,67 @@ console.error('Error durante a busca de dados: ', error);
 }
 })();
 ;
+
+async function alter(id){
+    (async () => {
+        console.log(id);
+  const query = new Parse.Query('aluguel');
+  try {
+    // here you put the objectId that you want to update
+    const object = await query.get(id);
+    var cliente = document.getElementById('alter_cli').value;
+    var livro = document.getElementById('alter_livro').value;
+    var dtaluguel = (document.getElementById('alter_dtaluguel').value);
+    var dtretorno = (document.getElementById('alter_dtretorno').value);
+    var obs = (document.getElementById('alter_obs').value);
+
+    console.log(dtaluguel, dtretorno);
+    object.set('nome_cliente', cliente);
+    object.set('nome_livro', livro);
+    object.set('alugado', dtaluguel);
+    object.set('dt_retorno', dtretorno);
+    object.set('obs', obs);
+    try {
+      const response = await object.save();
+      // You can use the "get" method to get the value of an attribute
+      // Ex: response.get("<ATTRIBUTE_NAME>")
+      // Access the Parse Object attributes using the .GET method
+        alert('Livro atualizado com sucesso');
+        window.location.reload();
+    } catch (error) {
+        alert('Error ao atualizar o livro: ' + error);
+        }
+  } catch (error) {
+    console.error('Error while retrieving object ', error);
+  }
+})();};
+
+async function alterar(id){
+   
+   // When the user clicks anywhere outside of the modal, close it
+       var alter_modal = document.getElementById("alterModal");
+       var alter_span = document.getElementsByClassName("close_alter")[0];
+       var alterar_elemento = document.getElementById("salvar_alteracao");
+       var id_alter = id;
+       console.log(alterar_elemento);
+       alter_modal.style.display = "block";
+       alterar_elemento.setAttribute("id", "salvar");
+       alterar_elemento.setAttribute("onclick", "alter('"+id+"')")
+       console.log(alterar_elemento);
+   
+   
+   // When the user clicks on <span> (x), close the modal
+       alter_span.onclick = function() {
+       alter_modal.style.display = "none";
+   }
+   
+   window.onclick = function(event) {
+     if (event.target == alter_modal) {
+       alter_modal.style.display = "none";
+     }
+   };
+   
+   }
         </script>
     
 </body>
@@ -95,5 +151,26 @@ console.error('Error durante a busca de dados: ', error);
 <footer>
     <p><a href="https://www.flaticon.com/br/icones-gratis/desinstalar" title="desinstalar ícones" id="link">Ícones criados por feen - Flaticon</a></p>
 </footer>
+
+<div id="alterModal" class="alterarModal">
+    <!-- Modal content -->
+    <div class="alter-modal-content">
+      <span class="close_alter">&times;</span>
+      <form>
+          <h2>Alterar Informações</h2> <br>
+          <label for="titulo">Cliente: </label> 
+          <input type="text" id="alter_cli"> <br> <br>
+          <label for="titulo">Nome do Livro: </label>
+          <input type="text" id="alter_livro"> <br> <br>
+          <label for="titulo">Data de aluguel do Livro: </label>
+          <input type="date" id="alter_dtaluguel"> <br> <br>
+          <label for="titulo">Data de entrega do Livro: </label>
+          <input type="date" id="alter_dtretorno"> <br> <br>
+          <label for="titulo">Observação: </label>
+          <input type="text" id="alter_obs"> <br> <br>
+          <input id="salvar_alteracao" value="Salvar" onclick="alter('id')"/>
+      </form>
+    </div>
+    </div>
 
 </html>
