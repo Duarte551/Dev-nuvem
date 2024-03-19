@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <title>Aluguel</title>
 </head>
 <body>
@@ -32,18 +33,67 @@
             <th>Data Alugado</th>
             <th>Previsão de retorno</th>
             <th>Quantidade Alugada</th>
+            <th>Ações</th>
         </tr>
         <tr>
-            <td>Antônio Lucas</td>
-            <td>Harry Potter</td>
-            <td>18/03/2024</td>
-            <td>19/04/2024</td>
-            <td>1</td>
         </tr>
 
     </table>
 
+    <script>
+        // Initialize Parse
+          Parse.initialize("hAKW94vFpsnFoiVHh146m5IC6VABTnFCZSJuj7Sn", "pCfcrglrHbC03KLK9CWsAhb7ZO7DJoynQbDBS49G"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+          Parse.serverURL = "https://parseapi.back4app.com/";
+
+          (async () => {
+const query = new Parse.Query('aluguel');
+// You can also query by using a parameter of an object
+// query.equalTo('objectId', 'xKue915KBG');
+const results = await query.find();
+try {
+for (const object of results) {
+  // Access the Parse Object attributes using the .GET method
+  const id_objeto = object.id;
+  const cliente = object.get('nome_cliente');
+  const livro = object.get('nome_livro');
+  const dt_aluguel = object.get('createdAt');
+  const dt_retorno = object.get('dt_retorno');
+  const qt_aluguel = object.get('quantidade');
+  const element = document.getElementById('aluguel');
+  let dt_aluguel_format = new Date(dt_aluguel);
+  dt_aluguel_format = String(dt_aluguel_format.getDate() + '/' + (dt_aluguel_format.getMonth() + 1) + '/' + dt_aluguel_format.getFullYear());
+
+  let dt_retorno_format = new Date(dt_retorno);
+  dt_retorno_format = String(dt_retorno_format.getDate() + '/' + (dt_retorno_format.getMonth() + 1) + '/' + dt_retorno_format.getFullYear());
+  let qtlinha = element.rows.length;
+  var linha = element.insertRow(qtlinha);
+  var insert_cliente = linha.insertCell(0);
+  var insert_livro = linha.insertCell(1);
+  var insert_dt_aluguel = linha.insertCell(2);
+  var insert_dt_retorno = linha.insertCell(3);
+  var insert_quantidade = linha.insertCell(4);
+  var editar = linha.insertCell(5);
+  insert_cliente.innerHTML = `${cliente}`;
+  insert_livro.innerHTML = `${livro}`;
+  insert_dt_aluguel.innerHTML = `${dt_aluguel_format}`;
+  insert_dt_retorno.innerHTML = `${dt_retorno_format}`;
+  insert_quantidade.innerHTML = `${qt_aluguel}`;
+  editar.innerHTML = "<button id='edit' onclick=alterar('"+id_objeto+"')><img src='editar.png'></button>" + "<button id='delete' onclick=excluir('"+id_objeto+"')><img src='excluir.png'></button>";  
+}
+} catch (error) {
+console.error('Error durante a busca de dados: ', error);
+}
+})();
+;
+        </script>
     
 </body>
-<script src="scripts.js"></script>
+<script src="scripts.js">
+ 
+</script>
+
+<footer>
+    <p><a href="https://www.flaticon.com/br/icones-gratis/desinstalar" title="desinstalar ícones" id="link">Ícones criados por feen - Flaticon</a></p>
+</footer>
+
 </html>
