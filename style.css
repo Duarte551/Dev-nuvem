@@ -95,7 +95,10 @@ h2 {
     align-items: center;
     justify-content: center;
 }
-
+.btn {
+    display: flex;
+justify-content: flex-end;
+}
 table, td, th{
     /* margin: 60px 0px 0px 25%; */
     padding: 10px;
@@ -197,7 +200,11 @@ button{
 .main {
     display: grid;
     grid-template-columns: 1fr 1fr 10% 10%;
+}
 
+.main_rent {
+    display: grid;
+    grid-template-columns: 30% 1fr;
 }
 
 .livro {
@@ -226,30 +233,38 @@ button{
     grid-row-start: 2;
 }
 
-#livro, #alter_livro {
+#livro, #alter_livro,  #alter_cli, #autor, #alter_autor,  #nota, #alter_nota {
     border: 2px solid var(--darkerCoral);
     width: 98%;
-}
-
-#autor, #alter_autor {
-    border: 2px solid var(--darkerCoral);
-    width: 98%;
+    margin: 1.5px;
 }
 
 #ano_lanc, #alter_ano_lanc {
     border: 2px solid var(--darkerCoral);
     width: 92%;
+    margin: 1.5px;
 }
-
-#nota, #alter_nota {
-    border: 2px solid var(--darkerCoral);
+#ano_lanc {
     width: 98%;
 }
 
-#resenha, #alter_resenha{
+#resenha, #alter_resenha {
     border: 2px solid var(--darkerCoral);
     width: 100%;
-    min-height: 3rem;;
+    min-height: 3rem;
+    margin: 1.5px;
+}
+#alter_obs {
+    border: 2px solid var(--darkerCoral);
+    width: 98%;
+    min-height: 3rem;
+    margin: 1.5px;
+}
+#alter_dtaluguel, #alter_dtretorno {
+    border: 2px solid var(--darkerCoral);
+    width: 98%;
+    margin: 1.5px;
+
 }
 
   /* The Close Button */

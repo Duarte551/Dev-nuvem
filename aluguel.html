@@ -34,7 +34,7 @@
             <th>Cliente</th>
             <th>Livro Alugado</th>
             <th>Data Alugado</th>
-            <th>Previsão de retorno</th>
+            <th>Previsão de Retorno</th>
             <th>Observação</th>
             <th>Ações</th>
         </tr>
@@ -161,17 +161,19 @@ async function alterar(id){
       <span class="close_alter">&times;</span>
       <form>
           <h2>Alterar Informações</h2> <br>
+          <div class="main_rent">
           <label for="titulo">Cliente: </label> 
-          <input type="text" id="alter_cli"> <br> <br>
+          <input type="text" id="alter_cli"> 
           <label for="titulo">Nome do Livro: </label>
-          <input type="text" id="alter_livro"> <br> <br>
-          <label for="titulo">Data de aluguel do Livro: </label>
-          <input type="date" id="alter_dtaluguel"> <br> <br>
-          <label for="titulo">Data de entrega do Livro: </label>
-          <input type="date" id="alter_dtretorno"> <br> <br>
+          <input type="text" id="alter_livro"> 
+          <label for="titulo">Data de Aluguel do Livro: </label>
+          <input type="date" id="alter_dtaluguel"> 
+          <label for="titulo">Data de Devolução do Livro: </label>
+          <input type="date" id="alter_dtretorno"> 
           <label for="titulo">Observação: </label>
-          <input type="text" id="alter_obs"> <br> <br>
-          <input id="salvar_alteracao" value="Salvar" onclick="alter('id')"/>
+          <input type="text" id="alter_obs"> </div>
+          <div class="btn">
+          <input id="salvar_alteracao" value="Salvar" onclick="alter('id')"/></div>
       </form>
     </div>
     </div>
