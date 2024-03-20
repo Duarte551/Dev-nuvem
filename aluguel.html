@@ -28,6 +28,29 @@
 
     <div class="borda">
     <button id="add">Alugar Livro</button>
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form>
+            <h2>Cadastrar Aluguel</h2> <br>
+            <label for="titulo">Cliente: </label> 
+            <input type="text" id="cliente">
+            <label for="titulo">Nome do Livro: </label>
+            <input type="text" id="livro"> 
+            <label for="titulo">Data de aluguel: </label>
+            <input type="date" id="dt_aluguel">
+            <label for="titulo">Previsão de retorno: </label>
+            <input type="date" id="dtretorno">
+            <label for="titulo">Observação: </label>
+            <input type="string" id="obs">
+            <div class="btn">
+            <input id="salvar" value="Salvar" onclick="cadastrar()"/></div>
+        </form>
+      </div>
+    
+    </div>
     
     <table class="teste" id="aluguel">
         <tr>
@@ -144,6 +167,26 @@ async function alterar(id){
    };
    
    }
+
+   async function excluir(id){
+    (async () => {
+        console.log(id);
+  const query = new Parse.Query('aluguel');
+  try {
+    // here you put the objectId that you want to delete
+    const object = await query.get(id);
+    try {
+      const response = await object.destroy();
+      alert('Livro excluído com sucesso');
+      window.location.reload();
+    } catch (error) {
+        alert('Error ao excluir o livro: ' + error);
+    }
+  } catch (error) {
+    alert('Error ao excluir o livro: ' + error);
+  }
+})();
+}
         </script>
     
 </body>

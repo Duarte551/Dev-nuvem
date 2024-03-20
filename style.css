@@ -120,8 +120,8 @@ th {
 }
 
 #aluguel{
-    /* margin: 60px 0px 0px 10%;  */
-
+    margin: 60px 0px 0px 0%;
+    text-align: center; 
 }
 
 footer {
@@ -383,7 +383,7 @@ input{
     }
 
     table, td, th{
-        margin: 220px 60px 0px 10%;
+        margin: 20px 60px 0px 10%;
         padding: 10px;
         align-items: center;
         justify-content: space-between;
@@ -393,7 +393,7 @@ input{
     }
 
     #aluguel{
-        margin: 220px 60px 0px 10%;
+        margin: 20px 60px 0px 10%;
     }
     
     #add{
