@@ -1,3 +1,15 @@
+:root {
+    --red: rgb(218, 152, 152);
+    --darkerRed: rgb(193, 88, 88);
+    --darkRed: rgb(219, 79, 102);
+    --maroon: rgb(198, 9, 9);
+    --whitish: rgb(244, 238, 238, 0.7);
+    --whitish2: rgb(253, 248, 248);
+    --rosa: rgb(255, 0, 93);
+    --coral: #fe8772;
+    --darkerCoral:#df4545;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -10,9 +22,11 @@ html {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    min-height: 35rem;
 }
+
 header{
-    background-color: black;
+    background-color: var(--red);
 }
 
 li{
@@ -24,6 +38,9 @@ a{
     text-decoration: none;
 }
 
+h2 {
+    color: var(--maroon);
+}
 .navbar{
     min-height: 70px;
     display: flex;
@@ -40,7 +57,7 @@ a{
 .nav-menu{
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 4rem;
 }
 
 .nav-link{
@@ -48,11 +65,12 @@ a{
 }
 
 .nav-link:hover{
-    color: #0088d2;
+    color: var(--darkerRed);
 }
 
 #marca{
-    color: #0088d2;
+    color: var(--darkRed);
+    font-weight: bold;
 }
 
 .hamburguer{
@@ -70,18 +88,37 @@ a{
     transition: all 0.3s ease-in-out;
 }
 
+.borda {
+    border: 5px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 table, td, th{
-    margin: 60px 0px 0px 25%;
+    /* margin: 60px 0px 0px 25%; */
     padding: 10px;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    border: 2px black solid;
+    border: 2px var(--darkerRed) solid;
     border-collapse: collapse;
+    
+}
+
+td {
+    background-color: var(--whitish);
+}
+
+th {
+    background-color: var(--red);
+    color: #fff;
 }
 
 #aluguel{
-    margin: 60px 0px 0px 10%; 
+    /* margin: 60px 0px 0px 10%;  */
+
 }
 
 footer {
@@ -93,7 +130,7 @@ footer {
     padding: 24px 0;
     text-align: center;
     font-size: 14px;
-  }
+}
 
 #link{
     font-size: 14pt;
@@ -114,18 +151,22 @@ button{
 }
 
 #add{
-    margin: 15px;
+    margin: 1rem;
+    padding: 0.3rem 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 3px;
+    /* padding: 3px; */
     float: left;
     cursor: pointer;
-    border: 1px solid black;
+    border: 2px solid var(--darkerRed);
     font-family: "Helvetica Neue", Helvetica, Arial,;
-    font-size: 18px;
-    background-color: #0088d2;
+    font-size: 1.2rem;
+    background-color: var(--red);
     color:white;
+    width: 9rem;
+    border-radius: 0.5rem;
+    min-width: fit-content;
 }
 
 .modal {
@@ -139,32 +180,92 @@ button{
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
+    
+}
+
   /* Modal Content/Box */
-  .modal-content {
-    background-color: #fefefe;
+.modal-content {
+    background-color: var(--whitish2);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border-radius: 5px;
-    width: 50%;
-    text-align: center; /* Could be more or less, depending on screen size */
-  }
-  
+    width: 65%;
+    border: 2px solid var(--darkerRed);
+    /* text-align: center; Could be more or less, depending on screen size */
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 10% 10%;
+
+}
+
+.livro {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.autor {
+    grid-column-start: 2;
+    grid-row-start: 1;
+}  
+
+.ano {
+    grid-column-start: 3;
+    grid-row-start: 1;
+}  
+
+.nota {
+    grid-column-start: 4;
+    grid-row-start: 1;
+}  
+
+.avali {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 2;
+}
+
+#livro, #alter_livro {
+    border: 2px solid var(--darkerCoral);
+    width: 98%;
+}
+
+#autor, #alter_autor {
+    border: 2px solid var(--darkerCoral);
+    width: 98%;
+}
+
+#ano_lanc, #alter_ano_lanc {
+    border: 2px solid var(--darkerCoral);
+    width: 92%;
+}
+
+#nota, #alter_nota {
+    border: 2px solid var(--darkerCoral);
+    width: 98%;
+}
+
+#resenha, #alter_resenha{
+    border: 2px solid var(--darkerCoral);
+    width: 100%;
+    min-height: 3rem;;
+}
+
   /* The Close Button */
-  .close {
+.close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--maroon);
     text-decoration: none;
     cursor: pointer;
-  }
+}
 
 input{
     border-radius: 5px;
@@ -174,18 +275,21 @@ input{
 }
 
 #salvar{
-    border: 1px solid black;
+    border: 2px solid var(--darkerCoral);
     font-family: "Helvetica Neue", Helvetica, Arial,;
     font-size: 16px;
-    margin: 0px;
-    padding: 7px;
+    margin: 1rem;
+    padding: 0.3rem;
     text-align: center;
-    background-color: #0088d2;
+    background-color: var(--coral);
     color:white;
-    border-radius: 3px;
-    width: 18%;
+    width: 9rem;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
+
+
+
 
 .alterarModal {
     display: none; /* Hidden by default */
@@ -202,12 +306,12 @@ input{
   
   /* Modal Content/Box */
   .alter-modal-content {
-    background-color: #fefefe;
+    background-color: var(--whitish2);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border-radius: 5px;
-    width: 50%;
-    text-align: center; /* Could be more or less, depending on screen size */
+    width: 65%;
+    /* text-align: center; Could be more or less, depending on screen size */
   }
   
   /* The Close Button */

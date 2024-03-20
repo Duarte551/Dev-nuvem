@@ -7,8 +7,11 @@
     <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <title>Avaliação</title>
 </head>
+
 <body>
+
     <img src="excluir.png" alt="" class="edit" hidden>  
+
     <header>
         <nav class="navbar">
         <a href="index.html" class="logo">Library</a>   
@@ -24,33 +27,46 @@
                 <span class="bar"></span>
             </div>
         </nav>
-    
     </header>
 
-    <button id="add">Adicionar Avaliação</button>
+    <div class="borda">
+      <button id="add">Adicionar Avaliação</button>
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
+    <div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form>
-        <h2>Cadastrar Avaliação</h2> <br>
-        <label for="titulo">Nome do Livro: </label> 
-        <input type="text" id="livro"> <br> <br>
-        <label for="titulo">Autor do Livro: </label>
-        <input type="text" id="autor"> <br> <br>
-        <label for="titulo">Ano de lançamento do Livro: </label>
-        <input type="number" id="ano_lanc"> <br> <br>
-        <label for="titulo">Nota: </label> 
-        <input type="number" id="nota"> <br> <br>
-        <label for="titulo">Resenha: </label> 
-        <input type="text" id="resenha"> <br> <br>
-        <input id="salvar" value="Salvar" onclick="saveBook()"/>
-    </form>
-  </div>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form>
+            <h2>Cadastrar Avaliação</h2> <br>
 
+            <div class="main">
+              <div class="livro">
+                <label for="titulo">Título: </label> 
+                <input type="text" id="livro"> <br> <br>
+              </div>
+              <div class="autor">
+                <label for="titulo">Autor: </label>
+                <input type="text" id="autor"> 
+              </div>
+              <div class="ano">
+                <label for="titulo">Ano: </label>
+                <input type="number" id="ano_lanc">
+              </div>
+              <div class="nota">
+                <label for="titulo">Nota: </label> 
+                <input type="number" id="nota"> 
+              </div>
+              <div class="avali">
+                <label for="titulo">Resenha: </label> 
+                <input type="text" id="resenha"> 
+              </div>
+            </div>
+
+              <input id="salvar" value="Salvar" onclick="saveBook()"/>
+        </form>
+      </div>
 </div>
 
     <table id="library">
@@ -62,16 +78,24 @@
                 Autor
             </th>
             <th>
-                Ano Lançamento
+                Ano
             </th>
             <th>
+                Nota
+            </th>
+            <th>
+              Resenha
+          </th>
+          <th>
                 Ações
             </th>
         </tr>
-        <tr id="teste">
+        <tr>
         </tr>
     </table>
+  </div>
 </body>
+
 <footer>
     <p><a href="https://www.flaticon.com/br/icones-gratis/desinstalar" title="desinstalar ícones" id="link">Ícones criados por feen - Flaticon</a></p>
 </footer>
@@ -93,16 +117,22 @@ for (const object of results) {
   const livro = object.get('livro');
   const autor = object.get('autor');
   const ano_lanc = object.get('ano_lancamento');
+  const nota = object.get('nota');
+  const resenha = object.get('resenha');
   const element = document.getElementById('library');
   let qtlinha = element.rows.length;
   var linha = element.insertRow(qtlinha);
   var insert_livro = linha.insertCell(0);
   var insert_autor = linha.insertCell(1);
   var insert_ano_lanc = linha.insertCell(2);
-  var editar = linha.insertCell(3);
+  var insert_nota = linha.insertCell(3);
+  var insert_resenha = linha.insertCell(4);
+  var editar = linha.insertCell(5);
   insert_livro.innerHTML = `${livro}`;
   insert_autor.innerHTML = `${autor}`;
   insert_ano_lanc.innerHTML = `${ano_lanc}`;
+  insert_nota.innerHTML = `${nota}`;
+  insert_resenha.innerHTML = `${resenha}`;
   editar.innerHTML = "<button id='edit' onclick=alterar('"+id_objeto+"')><img src='editar.png'></button>" + "<button id='delete' onclick=excluir('"+id_objeto+"')><img src='excluir.png'></button>";  
 }
 } catch (error) {
@@ -117,9 +147,13 @@ async function saveBook(){
   var livro = document.getElementById('livro').value;
   var autor = document.getElementById('autor').value;
   var ano_lanc = parseInt(document.getElementById('ano_lanc').value);
+  var nota = document.getElementById('nota').value;
+  var resenha= document.getElementById('resenha').value;
   myNewObject.set('livro', livro);
   myNewObject.set('autor', autor);
   myNewObject.set('ano_lancamento', ano_lanc);
+  myNewObject.set('nota', nota);
+  myNewObject.set('resenha',resenha);
   console.log(livro, autor, ano_lanc, myNewObject);
   try {
     const result = await myNewObject.save();
@@ -144,9 +178,13 @@ async function alter(id){
     var livro = document.getElementById('alter_livro').value;
     var autor = document.getElementById('alter_autor').value;
     var ano_lanc = parseInt(document.getElementById('alter_ano_lanc').value);
+    var nota = document.getElementById('alter_nota').value;
+    var resenha = document.getElementById('alter_resenha').value;
     object.set('livro', livro);
     object.set('autor', autor);
     object.set('ano_lancamento', ano_lanc);
+    object.set('nota', nota);
+    object.set('resenha', resenha);
     try {
       const response = await object.save();
       // You can use the "get" method to get the value of an attribute
@@ -226,16 +264,28 @@ window.onclick = function(event) {
       <span class="close_alter">&times;</span>
       <form>
           <h2>Alterar Livro</h2> <br>
-          <label for="titulo">Nome do Livro: </label> 
-          <input type="text" id="alter_livro"> <br> <br>
-          <label for="titulo">Autor do Livro: </label>
-          <input type="text" id="alter_autor"> <br> <br>
-          <label for="titulo">Ano de lançamento do Livro: </label>
-          <input type="number" id="alter_ano_lanc"> <br> <br>
-          <label for="titulo">Nota: </label> 
-          <input type="number" id="nota"> <br> <br>
-          <label for="titulo">Resenha: </label> 
-          <input type="text" id="resenha"> <br> <br>
+          <div class="main">
+            <div class="livro">
+              <label for="titulo">Título: </label> 
+              <input type="text" id="alter_livro">
+            </div>
+            <div class="autor">
+              <label for="titulo">Autor: </label>
+              <input type="text" id="alter_autor"> 
+            </div>
+            <div class="ano">
+              <label for="titulo">Ano: </label>
+              <input type="number" id="alter_ano_lanc">
+            </div>
+            <div class="nota">
+              <label for="titulo">Nota: </label> 
+              <input type="number" id="alter_nota"> 
+            </div>
+            <div class="avali">
+              <label for="titulo">Resenha: </label> 
+              <input type="text" id="alter_resenha"> 
+            </div>
+          </div>
           <input id="salvar_alteracao" value="Salvar" onclick="alter('id')"/>
       </form>
     </div>
