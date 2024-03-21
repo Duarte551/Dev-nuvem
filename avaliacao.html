@@ -102,11 +102,11 @@
 
 <script>
     // Initialize Parse
-      Parse.initialize("GuU1rOfMH8uOj08uIoK3CvjUphB7MWhbRzu0R8U8", "J5HBPvBlD0V0Eh5yhHET2PSQAaV0q97gpcGIvT5x"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+      Parse.initialize("rRaxy0ErbHytWXHclyO9kv9B4K7P6inhvxqjaORb", "W5RvVtxKgSfUyhjyocg85Ly6ixSLZIYCuusOxnRV"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
       Parse.serverURL = "https://parseapi.back4app.com/";
 
       (async () => {
-const query = new Parse.Query('catalogo');
+const query = new Parse.Query('avaliacao');
 // You can also query by using a parameter of an object
 // query.equalTo('objectId', 'xKue915KBG');
 const results = await query.find();
@@ -171,7 +171,7 @@ async function saveBook(){
 async function alter(id){
     (async () => {
         console.log(id);
-  const query = new Parse.Query('catalogo');
+  const query = new Parse.Query('avaliacao');
   try {
     // here you put the objectId that you want to update
     const object = await query.get(id);
@@ -196,6 +196,10 @@ async function alter(id){
         console.log('Autor atualizado ', response);
         console.log(response.get('ano_lancamento'));
         console.log('Ano de lançamento atualizado ', response);
+        console.log(response.get('nota'));
+        console.log('Nota atualizada ', response);
+        console.log(response.get('resenha'));
+        console.log('Resenha atualizada ', response);
         alert('Livro atualizado com sucesso');
         window.location.reload();
     } catch (error) {
@@ -209,7 +213,7 @@ async function alter(id){
 async function excluir(id){
     (async () => {
         console.log(id);
-  const query = new Parse.Query('catalogo');
+  const query = new Parse.Query('avaliacao');
   try {
     // here you put the objectId that you want to delete
     const object = await query.get(id);
