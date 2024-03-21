@@ -189,7 +189,7 @@ button{
   /* Modal Content/Box */
 .modal-content {
     background-color: var(--whitish2);
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 6% auto; /* 15% from the top and centered */
     padding: 20px;
     border-radius: 5px;
     width: 65%;
@@ -233,7 +233,7 @@ button{
     grid-row-start: 2;
 }
 
-#livro, #alter_livro,  #alter_cli, #autor, #alter_autor,  #nota, #alter_nota {
+#livro, #alter_livro,  #alter_cli, #autor, #alter_autor,  #nota, #alter_nota, #cliente, #obs {
     border: 2px solid var(--darkerCoral);
     width: 98%;
     margin: 1.5px;
