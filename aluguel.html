@@ -67,6 +67,30 @@
     </table></div>
 
     <script>
+
+      vglobal = []; //Variavel global para armazenamento
+
+      Parse.initialize("GuU1rOfMH8uOj08uIoK3CvjUphB7MWhbRzu0R8U8", "J5HBPvBlD0V0Eh5yhHET2PSQAaV0q97gpcGIvT5x"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+      Parse.serverURL = "https://parseapi.back4app.com/";
+
+      (async () => {
+        const query = new Parse.Query('catalogo');
+        // You can also query by using a parameter of an object
+        // query.equalTo('objectId', 'xKue915KBG');
+        const results = await query.find();
+        try {
+        for (const object of results) {
+          // Access the Parse Object attributes using the .GET method
+          const id_objeto = object.id;
+          const livro = object.get('livro');
+          vglobal.push(livro);
+          }
+        } catch (error) {
+        console.error('Error durante a busca de dados: ', error);
+        }
+        })();
+
+      console.log(vglobal);
         // Initialize Parse
           Parse.initialize("hAKW94vFpsnFoiVHh146m5IC6VABTnFCZSJuj7Sn", "pCfcrglrHbC03KLK9CWsAhb7ZO7DJoynQbDBS49G"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
           Parse.serverURL = "https://parseapi.back4app.com/";
@@ -119,23 +143,27 @@ async function alter(id){
     var dtaluguel = (document.getElementById('alter_dtaluguel').value);
     var dtretorno = (document.getElementById('alter_dtretorno').value);
     var obs = (document.getElementById('alter_obs').value);
+    if(vglobal.indexOf(livro) > -1){
+      object.set('nome_cliente', cliente);
+      object.set('nome_livro', livro);
+      object.set('alugado', dtaluguel);
+      object.set('dt_retorno', dtretorno);
+      object.set('obs', obs);
+      try {
+        const response = await object.save();
+        // You can use the "get" method to get the value of an attribute
+        // Ex: response.get("<ATTRIBUTE_NAME>")
+        // Access the Parse Object attributes using the .GET method
+          alert('Livro atualizado com sucesso');
+          window.location.reload();
+      } catch (error) {
+          alert('Error ao atualizar o livro: ' + error);
+          }
+    } else{
+      alert('Esse livro não está cadastrado no sistema! Por favor, verifique nosso catálogo para ver os livros disponíveis')
+    }
 
-    console.log(dtaluguel, dtretorno);
-    object.set('nome_cliente', cliente);
-    object.set('nome_livro', livro);
-    object.set('alugado', dtaluguel);
-    object.set('dt_retorno', dtretorno);
-    object.set('obs', obs);
-    try {
-      const response = await object.save();
-      // You can use the "get" method to get the value of an attribute
-      // Ex: response.get("<ATTRIBUTE_NAME>")
-      // Access the Parse Object attributes using the .GET method
-        alert('Livro atualizado com sucesso');
-        window.location.reload();
-    } catch (error) {
-        alert('Error ao atualizar o livro: ' + error);
-        }
+
   } catch (error) {
     console.error('Error while retrieving object ', error);
   }
@@ -149,19 +177,25 @@ async function cadastrar(){
   var dtaluguel = (document.getElementById('dt_aluguel').value);
   var dtretorno = (document.getElementById('dtretorno').value);
   var obs = (document.getElementById('obs').value);
-  myNewObject.set('nome_cliente', cliente);
-  myNewObject.set('nome_livro', livro);
-  myNewObject.set('alugado', dtaluguel);
-  myNewObject.set('dt_retorno', dtretorno);
-  myNewObject.set('obs', obs);
-  try {
-    const result = await myNewObject.save();
-    // Access the Parse Object attributes using the .GET method
-    alert('Livro adicionado com sucesso');
-    window.location.reload();
-  } catch (error) {
-    alert('Error ao adicionar o livro: ' + error);
+
+  if(vglobal.indexOf(livro) > -1){
+    myNewObject.set('nome_cliente', cliente);
+    myNewObject.set('nome_livro', livro);
+    myNewObject.set('alugado', dtaluguel);
+    myNewObject.set('dt_retorno', dtretorno);
+    myNewObject.set('obs', obs);
+    try {
+      const result = await myNewObject.save();
+      // Access the Parse Object attributes using the .GET method
+      alert('Livro adicionado com sucesso');
+      window.location.reload();
+    } catch (error) {
+      alert('Error ao adicionar o livro: ' + error);
+    }
+  } else {
+    alert('Esse livro não está cadastrado no sistema! Por favor, verifique nosso catálogo para ver os livros disponíveis')
   }
+
 })();};
 
 async function alterar(id){
