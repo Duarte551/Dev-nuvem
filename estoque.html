@@ -26,6 +26,29 @@
     
     </header>
     <div class="borda">
+
+        <button id="add">Cadastrar Estoque</button>
+        <div id="myModal" class="modal">
+    
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <form>
+                <h2>Cadastrar Estoque</h2> <br>
+                <label for="titulo">Livro: </label> 
+                <input type="text" id="livro"> <br> <br>
+                <label for="titulo">Quantidade Disponível: </label>
+                <input type="number" id="qt_disp"> <br> <br>
+                <label for="titulo">Quantidade Alugada: </label>
+                <input type="number" id="qt_alugada"> <br> <br>
+                <label for="titulo">Previsão de Estoque: </label>
+                <input type="date" id="prev_estoque">
+                <div class="btn">
+                <input id="salvar" value="Salvar" onclick="cadastrar()"/></div>
+            </form>
+          </div>
+        
+        </div>
     <table id="library">
         <tr>
             <th>
@@ -58,6 +81,30 @@
 </footer>
 
 <script>
+
+vglobal = []; //Variavel global para armazenamento
+
+Parse.initialize("GuU1rOfMH8uOj08uIoK3CvjUphB7MWhbRzu0R8U8", "J5HBPvBlD0V0Eh5yhHET2PSQAaV0q97gpcGIvT5x"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+Parse.serverURL = "https://parseapi.back4app.com/";
+
+(async () => {
+  const query = new Parse.Query('catalogo');
+  // You can also query by using a parameter of an object
+  // query.equalTo('objectId', 'xKue915KBG');
+  const results = await query.find();
+  try {
+  for (const object of results) {
+    // Access the Parse Object attributes using the .GET method
+    const id_objeto = object.id;
+    const livro = object.get('livro');
+    vglobal.push(livro);
+    }
+  } catch (error) {
+  console.error('Error durante a busca de dados: ', error);
+  }
+  })();
+
+console.log(vglobal);
     // Initialize Parse
       Parse.initialize("jupiM7CKpd2gLhDibXYDrmPaufiDQbRZ6ac2Qs6V", "QzLYUPt78rsoRw9jgWMOhv0O9jMqJLztsVZmEHzd"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
       Parse.serverURL = "https://parseapi.back4app.com/";
@@ -97,6 +144,37 @@ console.error('Error durante a busca de dados: ', error);
 }
 })();
 ;
+
+async function cadastrar(){
+(async () => {
+  const myNewObject = new Parse.Object('estoque');
+
+  var livro = document.getElementById('livro').value;
+  var qt_disp = document.getElementById('qt_disp').value;
+  var qt_alugada = (document.getElementById('qt_alugada').value);
+  var pre_estoque = (document.getElementById('prev_estoque').value);
+
+    console.log(qt_disp - qt_alugada)
+
+  if(vglobal.indexOf(livro) > -1){
+    myNewObject.set('livro', livro);
+    myNewObject.set('qt_disp', qt_disp);
+    myNewObject.set('qt_alugada', qt_alugada);
+    myNewObject.set('qt_total', (qt_disp - qt_alugada));
+    myNewObject.set('prev_estoque', pre_estoque);
+    try {
+      const result = await myNewObject.save();
+      // Access the Parse Object attributes using the .GET method
+      alert('Livro adicionado com sucesso');
+      window.location.reload();
+    } catch (error) {
+      alert('Error ao adicionar o livro: ' + error);
+    }
+  } else {
+    alert('Esse livro não está cadastrado no sistema! Por favor, verifique nosso catálogo para ver os livros disponíveis')
+  }
+
+})();};
     </script>
 
 <script src="scripts.js"></script>
