@@ -53,5 +53,51 @@
     </div> 
 </body>
 
+<footer>
+    <p><a href="https://www.flaticon.com/br/icones-gratis/desinstalar" title="desinstalar ícones" id="link">Ícones criados por feen - Flaticon</a></p>
+</footer>
+
+<script>
+    // Initialize Parse
+      Parse.initialize("jupiM7CKpd2gLhDibXYDrmPaufiDQbRZ6ac2Qs6V", "QzLYUPt78rsoRw9jgWMOhv0O9jMqJLztsVZmEHzd"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+      Parse.serverURL = "https://parseapi.back4app.com/";
+
+          (async () => {
+const query = new Parse.Query('estoque');
+// You can also query by using a parameter of an object
+// query.equalTo('objectId', 'xKue915KBG');
+const results = await query.find();
+try {
+for (const object of results) {
+  // Access the Parse Object attributes using the .GET method
+  const id_objeto = object.id;
+  const livro = object.get('livro');
+  const qt_disp = object.get('qt_disp');
+  const qt_alugada = object.get('qt_alugada');
+  const qt_total = object.get('qt_total');
+  const prev_estoque = object.get('prev_estoque');
+  const element = document.getElementById('library');
+  let qtlinha = element.rows.length;
+  var linha = element.insertRow(qtlinha);
+  var insert_livro = linha.insertCell(0);
+  var insert_qt_disp = linha.insertCell(1);
+  var insert_qt_alugada = linha.insertCell(2);
+  var insert_qt_total = linha.insertCell(3);
+  var insert_prev_estoque = linha.insertCell(4);
+  var editar = linha.insertCell(5);
+  insert_livro.innerHTML = `${livro}`;
+  insert_qt_disp.innerHTML = `${qt_disp}`;
+  insert_qt_alugada.innerHTML = `${qt_alugada}`;
+  insert_qt_total.innerHTML = `${qt_total}`;
+  insert_prev_estoque.innerHTML = `${prev_estoque}`;
+  editar.innerHTML = "<button id='edit' onclick=alterar('"+id_objeto+"')><img src='editar.png'></button>" + "<button id='delete' onclick=excluir('"+id_objeto+"')><img src='excluir.png'></button>";  
+}
+} catch (error) {
+console.error('Error durante a busca de dados: ', error);
+}
+})();
+;
+    </script>
+
 <script src="scripts.js"></script>
 </html>
