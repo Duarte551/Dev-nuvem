@@ -116,7 +116,7 @@ for (const object of results) {
   const id_objeto = object.id;
   const livro = object.get('livro');
   const autor = object.get('autor');
-  const ano_lanc = object.get('ano_lancamento');
+  const ano_lanc = object.get('ano_lanc');
   const nota = object.get('nota');
   const resenha = object.get('resenha');
   const element = document.getElementById('library');
@@ -151,7 +151,7 @@ async function saveBook(){
   var resenha= document.getElementById('resenha').value;
   myNewObject.set('livro', livro);
   myNewObject.set('autor', autor);
-  myNewObject.set('ano_lancamento', ano_lanc);
+  myNewObject.set('ano_lanc', ano_lanc);
   myNewObject.set('nota', nota);
   myNewObject.set('resenha',resenha);
   console.log(livro, autor, ano_lanc, myNewObject);
@@ -160,7 +160,7 @@ async function saveBook(){
     // Access the Parse Object attributes using the .GET method
     console.log('object livro: ', result.get('livro'));
     console.log('object autor: ', result.get('autor'));
-    console.log('object ano_lancamento: ', result.get('ano_lancamento'));
+    console.log('object ano_lanc: ', result.get('ano_lanc'));
     alert('Livro adicionado com sucesso');
     window.location.reload();
   } catch (error) {
@@ -182,7 +182,7 @@ async function alter(id){
     var resenha = document.getElementById('alter_resenha').value;
     object.set('livro', livro);
     object.set('autor', autor);
-    object.set('ano_lancamento', ano_lanc);
+    object.set('ano_lanc', ano_lanc);
     object.set('nota', nota);
     object.set('resenha', resenha);
     try {
@@ -194,7 +194,7 @@ async function alter(id){
         console.log('Livro atualizado ', response);
         console.log(response.get('autor'));
         console.log('Autor atualizado ', response);
-        console.log(response.get('ano_lancamento'));
+        console.log(response.get('ano_lanc'));
         console.log('Ano de lançamento atualizado ', response);
         console.log(response.get('nota'));
         console.log('Nota atualizada ', response);
