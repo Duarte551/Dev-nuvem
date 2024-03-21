@@ -175,7 +175,115 @@ async function cadastrar(){
   }
 
 })();};
+
+async function alter(id){
+    (async () => {
+        console.log(id);
+  const query = new Parse.Query('estoque');
+  try {
+    // here you put the objectId that you want to update
+    const object = await query.get(id);
+    var livro = document.getElementById('alter_livro').value;
+    var qt_disp = document.getElementById('alter_qt_disp').value;
+    var qt_alugada = (document.getElementById('alter_qt_alugada').value);
+    var prev_estoque = (document.getElementById('alter_prev_estoque').value);
+    if(vglobal.indexOf(livro) > -1){
+      object.set('livro', livro);
+      object.set('qt_disp', qt_disp);
+      object.set('qt_alugada', qt_alugada);
+      object.set('qt_total', (qt_disp  - qt_alugada));
+      object.set('prev_estoque', prev_estoque);
+      try {
+        const response = await object.save();
+        // You can use the "get" method to get the value of an attribute
+        // Ex: response.get("<ATTRIBUTE_NAME>")
+        // Access the Parse Object attributes using the .GET method
+          alert('Livro atualizado com sucesso');
+          window.location.reload();
+      } catch (error) {
+          alert('Error ao atualizar o livro: ' + error);
+          }
+    } else{
+      alert('Esse livro não está cadastrado no sistema! Por favor, verifique nosso catálogo para ver os livros disponíveis')
+    }
+
+
+  } catch (error) {
+    console.error('Error while retrieving object ', error);
+  }
+})();};
+
+async function alterar(id){
+   
+   // When the user clicks anywhere outside of the modal, close it
+       var alter_modal = document.getElementById("alterModal");
+       var alter_span = document.getElementsByClassName("close_alter")[0];
+       var alterar_elemento = document.getElementById("salvar_alteracao");
+       var id_alter = id;
+       console.log(alterar_elemento);
+       alter_modal.style.display = "block";
+       alterar_elemento.setAttribute("id", "salvar");
+       alterar_elemento.setAttribute("onclick", "alter('"+id+"')")
+       console.log(alterar_elemento);
+   
+   
+   // When the user clicks on <span> (x), close the modal
+       alter_span.onclick = function() {
+       alter_modal.style.display = "none";
+   }
+   
+   window.onclick = function(event) {
+     if (event.target == alter_modal) {
+       alter_modal.style.display = "none";
+     }
+   };
+   
+   }
+
+   async function excluir(id){
+    (async () => {
+        console.log(id);
+  const query = new Parse.Query('estoque');
+  try {
+    // here you put the objectId that you want to delete
+    const object = await query.get(id);
+    try {
+      const response = await object.destroy();
+      alert('Estoque excluído com sucesso');
+      window.location.reload();
+    } catch (error) {
+        alert('Error ao excluir o estoque: ' + error);
+    }
+  } catch (error) {
+    alert('Error ao excluir o estoque: ' + error);
+  }
+})();
+}
     </script>
+
+<div id="alterModal" class="alterarModal">
+    <!-- Modal content -->
+    <div class="alter-modal-content">
+      <span class="close_alter">&times;</span>
+      <form>
+          <h2>Alterar Informações</h2> <br>
+          <div class="main_rent">
+          <label for="titulo">Livro: </label> 
+          <input type="text" id="alter_livro"> 
+          <label for="titulo">Quantidade Disponível: </label>
+          <input type="text" id="alter_qt_disp">
+          <label for="titulo">Quantidade Alugada: </label> 
+          <input type="text" id="alter_qt_alugada"> 
+          <label for="titulo">Total: </label> 
+          <input type="number" id="alter_total"> 
+          <label for="titulo">Previsão de retorno: </label> 
+          <input type="date" id="alter_prev_estoque"> 
+        </div>
+          <div class="btn">
+          <input id="salvar_alteracao" value="Salvar" onclick="alter('id')"/></div>
+      </form>
+    </div>
+    </div>
 
 <script src="scripts.js"></script>
 </html>
